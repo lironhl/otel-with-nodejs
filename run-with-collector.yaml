@@ -12,7 +12,7 @@ services:
     depends_on:
       - collector
     environment:
-      - EXPORTER_ENDPOINT=collector:55680
+      - EXPORTER_ENDPOINT=http://collector:55680
     healthcheck:
       interval: 5s
       retries: 10
