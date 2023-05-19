@@ -3,12 +3,12 @@ version: '2.4'
 services:
 
   hello-app:
-    build: .
+    build: otel-service
     image: hello-app:latest
     container_name: hello-app
     hostname: hello-app
     ports:
-      - "8888:8888"
+      - "8888:3000"
     depends_on:
       - collector
     environment:
@@ -16,7 +16,7 @@ services:
     healthcheck:
       interval: 5s
       retries: 10
-      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:8888/hello
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:3000/
 
   collector:
     image: otel/opentelemetry-collector:latest

@@ -3,7 +3,7 @@ version: '2.4'
 services:
 
   hello-app:
-    build: .
+    build: otel-service
     image: hello-app:latest
     container_name: hello-app
     hostname: hello-app
@@ -11,13 +11,13 @@ services:
       fleet-server:
         condition: service_healthy
     ports:
-      - "8888:8888"
+      - "8888:3000"
     environment:
-      - EXPORTER_ENDPOINT=fleet-server:8200
+      - EXPORTER_ENDPOINT=http://fleet-server:8200
     healthcheck:
       interval: 5s
       retries: 10
-      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:8888/hello
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:3000/
 
   fleet-server:
     image: docker.elastic.co/beats/elastic-agent:8.1.0
